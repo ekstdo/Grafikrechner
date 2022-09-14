@@ -4,20 +4,19 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="221c5bae-b2ae-492e-b0ae-ba6188b23da3" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Grafikrechner.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Parser.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Term.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/ui/MainWindow.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/ui/PlotterPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/ui/TermPanel.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/util/PosParameters.java" afterDir="false" />
+    <list default="true" id="221c5bae-b2ae-492e-b0ae-ba6188b23da3" name="Changes" comment="Initial Commit">
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Lexer.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Token.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/TokenType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/ast/AST.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/ast/ASTCombinator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/ast/FunctionalAST.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/ast/FunctionalASTCombinator.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/util/Pair.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/parser/Term.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Term.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/util/PosParameters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/util/PosParameters.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,6 +26,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
+        <option value="Enum" />
+        <option value="Interface" />
         <option value="Class" />
       </list>
     </option>
@@ -46,10 +47,24 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true"
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "settings.editor.selected.configurable": "editor.preferences.fonts.default"
   }
 }]]></component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Parser">
+    <configuration name="Lexer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="grafikrechner.parser.Lexer" />
+      <module name="Grafikrechner" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="grafikrechner.parser.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Grafikrechner" />
@@ -57,8 +72,23 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="Parser" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="grafikrechner.parser.Parser" />
+      <module name="Grafikrechner" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="grafikrechner.parser.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Parser" />
+        <item itemvalue="Application.Lexer" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -72,6 +102,14 @@
       <option name="presentableId" value="Default" />
       <updated>1663163213665</updated>
     </task>
+    <task id="LOCAL-00001" summary="Initial Commit">
+      <created>1663170539779</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1663170539779</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -84,5 +122,13 @@
         </entry>
       </map>
     </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Initial Commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
+  </component>
+  <component name="XSLT-Support.FileAssociations.UIState">
+    <expand />
+    <select />
   </component>
 </project>

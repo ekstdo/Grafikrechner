@@ -1,12 +1,12 @@
 package grafikrechner.util;
 
 public class PosParameters {
-    double x;
-    double y;
-    double rCached;
-    double phiCached;
+    public double x;
+    public double y;
+    public double rCached;
+    public double phiCached;
 
-    PosParameters(double x, double y){
+    public PosParameters(double x, double y){
         this.x = x;
         this.y = y;
         double[] converted = convert(x, y);
