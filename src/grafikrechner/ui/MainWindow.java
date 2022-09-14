@@ -1,8 +1,10 @@
 package grafikrechner.ui;
 
+import grafikrechner.parser.ast.FunctionalAST;
 import grafikrechner.util.PosParameters;
 
 import javax.swing.*;
+import javax.swing.plaf.FontUIResource;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -13,10 +15,15 @@ public class MainWindow extends JFrame {
     PlotterPanel plotterPanel;
     TermPanel termPanel;
 
-    ArrayList<Function<PosParameters, Double>> functions;
+    ArrayList<FunctionalAST> functions;
 
 
     public MainWindow(){
+        // change the font size
+        UIManager.put("Label.font", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
+        UIManager.put("Button.font", new FontUIResource(new Font("Dialog", Font.BOLD, 20)));
+        UIManager.put("TextField.font", new FontUIResource(new Font("Dialog", Font.PLAIN, 20)));
+
         plotterPanel = new PlotterPanel(this);
         termPanel = new TermPanel(this);
         functions = new ArrayList<>();
@@ -24,7 +31,7 @@ public class MainWindow extends JFrame {
         setLayout(new GridLayout(0, 2));
 
         add(plotterPanel);
-        add(termPanel);
+        add(new JScrollPane(termPanel));
 
         pack();
         setVisible(true);

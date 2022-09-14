@@ -26,10 +26,12 @@ public class Parser {
         bin_prec = new HashMap<>();
         bin_prec.put("+", new Pair<>(1, 2));
         bin_prec.put("*", new Pair<>(3, 4));
+        bin_prec.put("^", new Pair<>(5, 6));
 
         bin_operators = new HashMap<>();
-        bin_operators.put("+", new FunctionalASTCombinator((x, y) -> x + y));
+        bin_operators.put("+", new FunctionalASTCombinator(Double::sum));
         bin_operators.put("*", new FunctionalASTCombinator((x, y) -> x * y));
+        bin_operators.put("^", new FunctionalASTCombinator(Math::pow));
     }
 
     public static void main(String[] args) {
@@ -45,12 +47,12 @@ public class Parser {
     Term parse(String text) throws ParseException {
         String[] splitText = text.split("=");
         boolean implicit = true;
-        if (splitText.length > 1)
+        if (splitText.length > 2)
             throw new ParseException("too many = signs", splitText[0].length() + splitText[1].length());
         if (splitText.length == 1) {
             implicit = false;
             text = splitText[0];
-        } else if (splitText[0].replaceAll("\\w", "") == "y") {
+        } else if (splitText[0].replaceAll("\\w", "").equals("y")) {
             implicit = false;
             text = splitText[1];
         } else
@@ -64,7 +66,7 @@ public class Parser {
         FunctionalAST left;
         Token nextToken = getToken();
         Optional<Double> value = nextToken.constantValue();
-        if (!value.isEmpty()) {
+        if (value.isPresent()) {
             left = p -> value.get();
         } else if (nextToken.type == TokenType.PAREN_LEFT) {
             int pos = nextToken.position;

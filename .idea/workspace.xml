@@ -4,19 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="221c5bae-b2ae-492e-b0ae-ba6188b23da3" name="Changes" comment="Initial Commit">
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Lexer.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Token.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/TokenType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/ast/AST.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/ast/ASTCombinator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/ast/FunctionalAST.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/parser/ast/FunctionalASTCombinator.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/grafikrechner/util/Pair.java" afterDir="false" />
+    <list default="true" id="221c5bae-b2ae-492e-b0ae-ba6188b23da3" name="Changes" comment="Started writing the Parser">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/grafikrechner/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/grafikrechner/parser/Term.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Term.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/grafikrechner/util/PosParameters.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/util/PosParameters.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/TermPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/TermPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,7 +43,7 @@
     "settings.editor.selected.configurable": "editor.preferences.fonts.default"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.Parser">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Lexer" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="grafikrechner.parser.Lexer" />
       <module name="Grafikrechner" />
@@ -87,9 +79,9 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.Main" />
         <item itemvalue="Application.Parser" />
         <item itemvalue="Application.Lexer" />
-        <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
   </component>
@@ -109,7 +101,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663170539779</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Started writing the Parser">
+      <created>1663189105844</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1663189105844</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -125,7 +124,8 @@
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Initial Commit" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit" />
+    <MESSAGE value="Started writing the Parser" />
+    <option name="LAST_COMMIT_MESSAGE" value="Started writing the Parser" />
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
