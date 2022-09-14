@@ -1,6 +1,8 @@
 package grafikrechner.ui;
 
 import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 import java.awt.*;
 
 public class TermPanel extends JPanel {
@@ -18,6 +20,26 @@ public class TermPanel extends JPanel {
             GridBagConstraints c = new GridBagConstraints();
 
             JTextField textField = new JTextField("y = x", 10);
+            textField.getDocument().addDocumentListener(new DocumentListener() {
+                @Override
+                public void insertUpdate(DocumentEvent e) {
+                    update(e);
+                }
+
+                @Override
+                public void removeUpdate(DocumentEvent e) {
+                    update(e);
+                }
+
+                @Override
+                public void changedUpdate(DocumentEvent e) {
+                    update(e);
+                }
+
+                public void update(DocumentEvent e) {
+                    System.out.println(textField.getText());
+                }
+            });
             c.gridx = 0;
             c.gridy = 0;
             c.weightx = 0.5;

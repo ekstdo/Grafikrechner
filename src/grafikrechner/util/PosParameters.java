@@ -1,6 +1,8 @@
 package grafikrechner.util;
 
-public class PosParameters {
+import java.awt.*;
+
+public class PosParameters extends Point {
     public double x;
     public double y;
     public double rCached;
@@ -25,6 +27,22 @@ public class PosParameters {
     }
 
     public double[] transform(double[] trafomatrix) {
+        double[] result = new double[2];
+        result[0] = trafomatrix[0] * x + trafomatrix[1] * y + trafomatrix[2];
+        result[1] = trafomatrix[3] * x + trafomatrix[4] * y + trafomatrix[5];
+        return result;
+    }
+
+    public static double[] transform(double[] coords, double[] trafomatrix) {
+        double[] result = new double[coords.length];
+        for (int i = 0; i < coords.length; i += 2) {
+            result[i] = trafomatrix[0] * coords[i] + trafomatrix[1] * coords[i + 1] + trafomatrix[2];
+            result[i + 1] = trafomatrix[3] * coords[i] + trafomatrix[4] * coords[i + 1] + trafomatrix[5];
+        }
+        return result;
+    }
+
+    public static double[] transform(double x, double y, double[] trafomatrix) {
         double[] result = new double[2];
         result[0] = trafomatrix[0] * x + trafomatrix[1] * y + trafomatrix[2];
         result[1] = trafomatrix[3] * x + trafomatrix[4] * y + trafomatrix[5];
