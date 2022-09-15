@@ -4,9 +4,12 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TermPanel extends JPanel {
     int counter = 0;
+    ArrayList<TermRow> rows;
     TermPanel(MainWindow plotter){
         JButton addButton = new JButton("+");
 
@@ -14,57 +17,17 @@ public class TermPanel extends JPanel {
 
         addButton.addActionListener(ev -> {
             counter += 1;
-            JPanel row = new JPanel();
-            row.setLayout(new GridBagLayout());
-
-            GridBagConstraints c = new GridBagConstraints();
-
-            JTextField textField = new JTextField("y = x", 10);
-            textField.getDocument().addDocumentListener(new DocumentListener() {
-                @Override
-                public void insertUpdate(DocumentEvent e) {
-                    update(e);
-                }
-
-                @Override
-                public void removeUpdate(DocumentEvent e) {
-                    update(e);
-                }
-
-                @Override
-                public void changedUpdate(DocumentEvent e) {
-                    update(e);
-                }
-
-                public void update(DocumentEvent e) {
-                    System.out.println(textField.getText());
-                }
-            });
-            c.gridx = 0;
-            c.gridy = 0;
-            c.weightx = 0.5;
-            row.add(new JLabel("Term "+ counter + ": "),c);
-
-            c.gridx = 1;
-            c.gridy = 0;
-            c.fill = GridBagConstraints.HORIZONTAL;
-            c.weightx = 2;
-            row.add(textField, c);
-
-            c.gridx = 2;
-            c.gridy = 0;
-            c.fill = GridBagConstraints.NONE;
-            c.weightx = 0.5;
-            JButton deleteButton = new JButton("-");
-            deleteButton.addActionListener(delEv -> {
-                this.remove(row);
-                plotter.pack();
-            });
-            row.add(deleteButton, c);
+            TermRow row = new TermRow(this, plotter);
             add(row);
             plotter.pack();
+
+            plotter.addFunction("y = x");
         });
 
         add(addButton);
+    }
+
+    public int getIndex(TermRow row){
+        return Arrays.asList(getComponents()).indexOf(row) - 1;
     }
 }

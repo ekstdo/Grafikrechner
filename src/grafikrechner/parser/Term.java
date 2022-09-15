@@ -9,10 +9,14 @@ import java.util.function.Function;
 
 public class Term {
     boolean implicit;
-    FunctionalAST fun;
+    public FunctionalAST fun;
 
     Term(boolean implicit, FunctionalAST fun){
         this.implicit = implicit;
         this.fun = fun;
+    }
+
+    public boolean is_implicit() {
+        return implicit;
     }
 }

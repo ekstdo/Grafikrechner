@@ -1,21 +1,20 @@
 package grafikrechner.ui;
 
-import grafikrechner.parser.ast.FunctionalAST;
-import grafikrechner.util.PosParameters;
+import grafikrechner.parser.Parser;
+import grafikrechner.parser.Term;
 
 import javax.swing.*;
 import javax.swing.plaf.FontUIResource;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.function.Function;
 
 public class MainWindow extends JFrame {
-    PlotterPanel plotterPanel;
-    TermPanel termPanel;
+    public PlotterPanel plotterPanel;
+    public TermPanel termPanel;
+    Parser p;
 
-    ArrayList<FunctionalAST> functions;
+    ArrayList<Term> functions;
 
 
     public MainWindow(){
@@ -26,7 +25,7 @@ public class MainWindow extends JFrame {
 
         plotterPanel = new PlotterPanel(this);
         termPanel = new TermPanel(this);
-        functions = new ArrayList<>();
+        functions = new ArrayList<Term>();
 
         setLayout(new GridLayout(0, 2));
 
@@ -34,10 +33,36 @@ public class MainWindow extends JFrame {
         add(new JScrollPane(termPanel));
 
         pack();
+        plotterPanel.initialCallback();
         setVisible(true);
 
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        p = new Parser();
     }
 
 
+    public void addFunction(String s) {
+        try {
+            functions.add(p.parse(s));
+        } catch (ParseException e) {
+            showParseError(e);
+            functions.add(null);
+        }
+    }
+
+    private void showParseError(ParseException e) {
+        System.out.println(e); // TODO
+    }
+
+    public void changeFunction(String s, int index){
+        try {
+            functions.set(index, p.parse(s));
+        } catch (ParseException e) {
+            showParseError(e);
+        }
+    }
+
+    public void removeFunction(int index) {
+        functions.remove(index);
+    }
 }

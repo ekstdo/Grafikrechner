@@ -93,6 +93,12 @@ public class Lexer implements Iterator<Token> {
             returning = makeToken(TokenType.OPERATOR);
         }
 
+        next = getNext();
+        while(Character.isWhitespace(next)) {
+            next = getNext();
+        }
+        save(next);
+
         return returning;
 
 

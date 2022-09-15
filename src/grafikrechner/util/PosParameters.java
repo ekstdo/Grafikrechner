@@ -42,10 +42,30 @@ public class PosParameters extends Point {
         return result;
     }
 
+    public static double[] inverseTransform(double[] coords, double[] trafomatrix) {
+        double[] result = new double[coords.length];
+        for (int i = 0; i < coords.length; i += 2) {
+            double[] temp = inverseTransform(coords[i], coords[i + 1], trafomatrix);
+            result[i] = temp[0];
+            result[i + 1] = temp[1];
+        }
+        return result;
+    }
+
     public static double[] transform(double x, double y, double[] trafomatrix) {
         double[] result = new double[2];
         result[0] = trafomatrix[0] * x + trafomatrix[1] * y + trafomatrix[2];
         result[1] = trafomatrix[3] * x + trafomatrix[4] * y + trafomatrix[5];
+        return result;
+    }
+
+    public static double[] inverseTransform(double x, double y, double[] trafomatrix) {
+        double[] result = new double[2];
+        double determinant = trafomatrix[0] * trafomatrix[4] - trafomatrix[1] * trafomatrix[3];
+        x -= trafomatrix[2];
+        y -= trafomatrix[5];
+        result[0] = 1/determinant * (trafomatrix[4] * x - trafomatrix[1] * y);
+        result[1] = 1/determinant * (-trafomatrix[3] * x + trafomatrix[0] * y);
         return result;
     }
 }

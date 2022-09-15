@@ -19,32 +19,36 @@ public class Parser {
     Map<String, Pair<Integer, Integer>> bin_prec;
     Token save = null;
 
-    Parser(){
+    public Parser(){
         level = 0;
         currentPos = 0;
 
         bin_prec = new HashMap<>();
         bin_prec.put("+", new Pair<>(1, 2));
+        bin_prec.put("-", new Pair<>(1, 2));
         bin_prec.put("*", new Pair<>(3, 4));
+        bin_prec.put("/", new Pair<>(3, 4));
         bin_prec.put("^", new Pair<>(5, 6));
 
         bin_operators = new HashMap<>();
         bin_operators.put("+", new FunctionalASTCombinator(Double::sum));
+        bin_operators.put("-", new FunctionalASTCombinator((x, y) -> x - y));
         bin_operators.put("*", new FunctionalASTCombinator((x, y) -> x * y));
+        bin_operators.put("/", new FunctionalASTCombinator((x, y) -> x / y));
         bin_operators.put("^", new FunctionalASTCombinator(Math::pow));
     }
 
     public static void main(String[] args) {
         try {
             Parser p = new Parser();
-            Term t = p.parse("x + y * x");
+            Term t = p.parse("5 + x ^ 3 * y + y * x");
             System.out.println(t.fun.apply(new PosParameters(4, 5)));
         } catch (ParseException e) {
             throw new RuntimeException(e);
         }
     }
 
-    Term parse(String text) throws ParseException {
+    public Term parse(String text) throws ParseException {
         String[] splitText = text.split("=");
         boolean implicit = true;
         if (splitText.length > 2)
@@ -52,7 +56,7 @@ public class Parser {
         if (splitText.length == 1) {
             implicit = false;
             text = splitText[0];
-        } else if (splitText[0].replaceAll("\\w", "").equals("y")) {
+        } else if (splitText[0].replaceAll("\\W", "").equals("y")) {
             implicit = false;
             text = splitText[1];
         } else
@@ -88,10 +92,9 @@ public class Parser {
                 break;
             }
             if (nextToken.type != TokenType.OPERATOR) {
+                System.out.println(nextToken.type);
                 throw new ParseException("expected an operator", nextToken.position);
             }
-
-            nextToken = getToken(); // remove save
             Pair<Integer, Integer> p = bin_prec.get(nextToken.inner);
             if (p == null){
                 throw new ParseException("unknown operator", nextToken.position);
@@ -100,6 +103,8 @@ public class Parser {
             if (p.first < min_prec) {
                 break;
             }
+
+            nextToken = getToken(); // remove save
 
             FunctionalAST right = parseExpr(p.second);
             left = bin_operators.get(nextToken.inner).combine(left, right);
