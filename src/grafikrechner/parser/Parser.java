@@ -10,38 +10,33 @@ import java.text.ParseException;
 import java.util.*;
 
 public class Parser {
-    int level;
-    int currentPos;
     Lexer lex;
     String text = "";
     Map<String,
-            ASTCombinator> bin_operators;
-    Map<String, Pair<Integer, Integer>> bin_prec;
+            ASTCombinator> binOp;
+    Map<String, Pair<Integer, Integer>> binPrec;
     Token save = null;
 
     public Parser(){
-        level = 0;
-        currentPos = 0;
+        binPrec = new HashMap<>();
+        binPrec.put("+", new Pair<>(1, 2));
+        binPrec.put("-", new Pair<>(1, 2));
+        binPrec.put("*", new Pair<>(3, 4));
+        binPrec.put("/", new Pair<>(3, 4));
+        binPrec.put("^", new Pair<>(6, 5));
 
-        bin_prec = new HashMap<>();
-        bin_prec.put("+", new Pair<>(1, 2));
-        bin_prec.put("-", new Pair<>(1, 2));
-        bin_prec.put("*", new Pair<>(3, 4));
-        bin_prec.put("/", new Pair<>(3, 4));
-        bin_prec.put("^", new Pair<>(5, 6));
-
-        bin_operators = new HashMap<>();
-        bin_operators.put("+", new FunctionalASTCombinator(Double::sum));
-        bin_operators.put("-", new FunctionalASTCombinator((x, y) -> x - y));
-        bin_operators.put("*", new FunctionalASTCombinator((x, y) -> x * y));
-        bin_operators.put("/", new FunctionalASTCombinator((x, y) -> x / y));
-        bin_operators.put("^", new FunctionalASTCombinator(Math::pow));
+        binOp = new HashMap<>();
+        binOp.put("+", new FunctionalASTCombinator(Double::sum));
+        binOp.put("-", new FunctionalASTCombinator((x, y) -> x - y));
+        binOp.put("*", new FunctionalASTCombinator((x, y) -> x * y));
+        binOp.put("/", new FunctionalASTCombinator((x, y) -> x / y));
+        binOp.put("^", new FunctionalASTCombinator(Math::pow));
     }
 
     public static void main(String[] args) {
         try {
             Parser p = new Parser();
-            Term t = p.parse("5 + x ^ 3 * y + y * x");
+            Term t = p.parse("5 + 4 * x ^ 3 * y + y * x  + x ^ 0.5  ");
             System.out.println(t.fun.apply(new PosParameters(4, 5)));
         } catch (ParseException e) {
             throw new RuntimeException(e);
@@ -49,8 +44,10 @@ public class Parser {
     }
 
     public Term parse(String text) throws ParseException {
+        save = null;
         String[] splitText = text.split("=");
         boolean implicit = true;
+        int errorOffset = 0;
         if (splitText.length > 2)
             throw new ParseException("too many = signs", splitText[0].length() + splitText[1].length());
         if (splitText.length == 1) {
@@ -58,12 +55,17 @@ public class Parser {
             text = splitText[0];
         } else if (splitText[0].replaceAll("\\W", "").equals("y")) {
             implicit = false;
+            errorOffset = splitText[0].length();
             text = splitText[1];
         } else
             text = String.join("-", splitText);
         lex = new Lexer(text);
         this.text = text;
-        return new Term(implicit, parseExpr(0));
+        try {
+            return new Term(implicit, parseExpr(0));
+        } catch (ParseException e) {
+            throw new ParseException(e.getMessage(), e.getErrorOffset() + errorOffset);
+        }
     }
 
     FunctionalAST parseExpr(int min_prec) throws ParseException{
@@ -95,7 +97,7 @@ public class Parser {
                 System.out.println(nextToken.type);
                 throw new ParseException("expected an operator", nextToken.position);
             }
-            Pair<Integer, Integer> p = bin_prec.get(nextToken.inner);
+            Pair<Integer, Integer> p = binPrec.get(nextToken.inner);
             if (p == null){
                 throw new ParseException("unknown operator", nextToken.position);
             }
@@ -107,7 +109,7 @@ public class Parser {
             nextToken = getToken(); // remove save
 
             FunctionalAST right = parseExpr(p.second);
-            left = bin_operators.get(nextToken.inner).combine(left, right);
+            left = binOp.get(nextToken.inner).combine(left, right);
         }
 
 
@@ -128,18 +130,5 @@ public class Parser {
             }
         else
             return new Token(TokenType.END, "", text.length(), 0);
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Parser parser = (Parser) o;
-        return level == parser.level && currentPos == parser.currentPos;
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(level, currentPos);
     }
 }

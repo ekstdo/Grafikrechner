@@ -11,15 +11,18 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class TermRow extends JPanel {
+    JTextField textField;
+    JLabel errorLabel;
     Highlighter highlighter;
     Highlighter.HighlightPainter hlpainter;
-    JTextField textField;
+
     TermRow(TermPanel panel, MainWindow plotter){
         setLayout(new GridBagLayout());
 
         GridBagConstraints c = new GridBagConstraints();
 
         textField = new JTextField("y = x", 10);
+        errorLabel = new JLabel("");
         highlighter = textField.getHighlighter();
         hlpainter = new DefaultHighlighter.DefaultHighlightPainter(new Color(247, 47, 53));
         textField.getDocument().addDocumentListener(new DocumentListener() {
@@ -39,6 +42,7 @@ public class TermRow extends JPanel {
             }
 
             public void update(DocumentEvent e) {
+                highlighter.removeAllHighlights();
                 plotter.changeFunction(textField.getText(), panel.getIndex(TermRow.this));
                 plotter.plotterPanel.repaint();
             }

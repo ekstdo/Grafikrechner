@@ -45,12 +45,13 @@ public class MainWindow extends JFrame {
         try {
             functions.add(p.parse(s));
         } catch (ParseException e) {
-            showParseError(e);
+            showParseError(e, functions.size());
             functions.add(null);
         }
     }
 
-    private void showParseError(ParseException e) {
+    private void showParseError(ParseException e, int index) {
+        termPanel.markError(index, e.getErrorOffset(), 1);
         System.out.println(e); // TODO
     }
 
@@ -58,7 +59,7 @@ public class MainWindow extends JFrame {
         try {
             functions.set(index, p.parse(s));
         } catch (ParseException e) {
-            showParseError(e);
+            showParseError(e, index);
         }
     }
 

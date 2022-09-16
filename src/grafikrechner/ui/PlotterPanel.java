@@ -24,65 +24,99 @@ public class PlotterPanel extends JPanel implements MouseMotionListener, MouseLi
         this.plotter = plotter;
     }
 
+    void drawLineTransformed(Graphics g, double x1, double y1, double x2, double y2){
+        double[] transformed = PosParameters.transform(new double[]{x1, y1, x2, y2}, trafoMatrix);
+        g.drawLine((int) transformed[0], (int) transformed[1], (int) transformed[2], (int) transformed[3]);
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         int textOffset = 15;
+        int textOffset2 = 6;
         double steps = getWidth();
         super.paintComponent(g);
 
-        double[] domain = new double[]{0, 0, getWidth(), getHeight()};
+        double[] domain = new double[]{0, 0, getWidth(), 0, getWidth(), getHeight(), 0, getHeight()};
         domain = PosParameters.inverseTransform(domain, trafoMatrix);
+        double[] bounds = getDomainBB(domain);
 
-        double nearestPower = Math.pow(10, 2 - (int) Math.log10(trafoMatrix[0]));
-        double nearestOffsetX = -((int) (trafoMatrix[2] / trafoMatrix[0] / nearestPower * 2)) * nearestPower / 2;
-        double nearestOffsetY = -((int) (trafoMatrix[5] / trafoMatrix[4] / nearestPower * 2)) * nearestPower / 2;
+        double nearestPower = Math.pow(10, Math.floor(Math.log10(bounds[2] - bounds[0])  ));
+        System.out.println(nearestPower);
+        double lowestRoundedOffsetX = ((int) (bounds[0] / nearestPower * 2)) * nearestPower / 2;
+        double lowestRoundedOffsetY = ((int) (bounds[1] / nearestPower * 2)) * nearestPower / 2;
 
         g.setColor(Color.black);
-        g.drawLine((int) (-trafoMatrix[2] * 50), (int) trafoMatrix[5], (int) (+ trafoMatrix[2] * 50), (int) trafoMatrix[5]);
-        g.drawLine((int) trafoMatrix[2], (int) (-trafoMatrix[5] * 50), (int) trafoMatrix[2], (int) (+ trafoMatrix[5] * 50));
+        drawLineTransformed(g, bounds[0], 0,bounds[2], 0);
+        drawLineTransformed(g, 0, bounds[1], 0, bounds[3]);
 
-        for (int i = -10; i < 10; i++){
-            double xcoord = nearestOffsetX + i * nearestPower / 2;
+        for (double xcoord = lowestRoundedOffsetX; xcoord <= bounds[2]; xcoord += nearestPower / 2){
             if (xcoord == 0) continue;
+
+            g.setColor(Color.lightGray);
+            for (double xsubcoord = xcoord; xsubcoord < xcoord + nearestPower; xsubcoord += nearestPower /10){
+                drawLineTransformed(g, xsubcoord, bounds[1], xsubcoord, bounds[3]);
+            }
+            g.setColor(Color.white);
+            drawLineTransformed(g, xcoord, bounds[1], xcoord,bounds[3]);
+            g.setColor(Color.black);
+
             double[] result = PosParameters.transform(xcoord, 0.0, trafoMatrix);
-            g.drawString("" + xcoord, (int) result[0], (int) result[1] + textOffset);
+            g.drawString("" + xcoord, (int) result[0] - textOffset, Math.max(Math.min((int) result[1] + textOffset, getHeight() - textOffset), textOffset));
+
+
         }
 
-        for (int i = -20; i < 20; i++){
-            double ycoord = nearestOffsetY + i * nearestPower / 2;
+        for (double ycoord = lowestRoundedOffsetY; ycoord < bounds[3]; ycoord += nearestPower / 2){
             double[] result = PosParameters.transform(0.0, ycoord, trafoMatrix);
-            g.drawString("" + ycoord, (int) result[0],  (int) result[1]+ textOffset );
+
+            g.setColor(Color.lightGray);
+            for (double ysubcoord = ycoord; ysubcoord < ycoord + nearestPower; ysubcoord += nearestPower /10){
+                drawLineTransformed(g, bounds[0], ysubcoord, bounds[2], ysubcoord);
+            }
+            g.setColor(Color.white);
+            drawLineTransformed(g, bounds[0], ycoord,bounds[2], ycoord);
+            g.setColor(Color.black);
+
+            g.drawString("" + ycoord, Math.min(Math.max((int) result[0] + textOffset, textOffset), getWidth() - 2 * textOffset),  (int) result[1] + textOffset2);
         }
 
-        plotFunctions(g, domain, steps);
+        drawLineTransformed(g, bounds[0], 0,bounds[2], 0);
+        drawLineTransformed(g, 0, bounds[1], 0, bounds[3]);
+
+
+        plotFunctions(g, bounds, steps);
     }
 
-    private void plotFunctions(Graphics g, double[] domain, double steps) {
-        double stepSize = (domain[2] - domain[0]) / steps;
+    static double[] getDomainBB(double[] domain){
+        double minX = Math.min(Math.min(Math.min(domain[0], domain[2]), domain[4]), domain[6]);
+        double maxX = Math.max(Math.max(Math.max(domain[0], domain[2]), domain[4]), domain[6]);
+        double minY = Math.min(Math.min(Math.min(domain[1], domain[3]), domain[5]), domain[7]);
+        double maxY = Math.max(Math.max(Math.max(domain[1], domain[3]), domain[5]), domain[7]);
+        return new double[] {minX, minY, maxX, maxY};
+    }
+
+    private void plotFunctions(Graphics g, double[] bounds, double steps) {
+        double stepSize = (bounds[2] - bounds[0]) / steps;
         for (Term function : plotter.functions) {
             if (function == null) continue;
             if (!function.is_implicit()){
-                PosParameters input = new PosParameters(domain[0] - 1,  0);
+                PosParameters input = new PosParameters(bounds[0] - 1,  0);
                 PosParameters previous = new PosParameters(input.x, function.fun.apply(input));
-                double[] preTransformed = previous.transform(trafoMatrix);
-                previous.x = preTransformed[0];
-                previous.y = preTransformed[1];
 
-                for (double x = domain[0]; x <= domain[2]; x += stepSize){
+                for (double x = bounds[0]; x <= bounds[2]; x += stepSize){
                     input.x = x;
                     double val = function.fun.apply(input);
-                    double[] transformed = PosParameters.transform(x, val, trafoMatrix);
 
                     if (Double.isNaN(val)) continue;
                     if (Double.isNaN(previous.y)) {
-                        previous.x = transformed[0];
-                        previous.y = transformed[1];
+                        previous.x = x;
+                        previous.y = val;
                         continue;
                     }
 
-                    g.drawLine((int) previous.x, (int) previous.y, (int) transformed[0], (int) transformed[1]);
-                    previous.x = transformed[0];
-                    previous.y = transformed[1];
+                    drawLineTransformed(g, previous.x, previous.y, x, val);
+                    previous.x = x;
+                    previous.y = val;
                 }
             }
         }
@@ -135,8 +169,16 @@ public class PlotterPanel extends JPanel implements MouseMotionListener, MouseLi
     public void mouseWheelMoved(MouseWheelEvent e) {
         double amount = e.getPreciseWheelRotation();
         double factor = 0.1;
-        trafoMatrix[0] = Math.max(Double.MIN_NORMAL, Math.exp(Math.log(trafoMatrix[0]) + factor * amount));
-        trafoMatrix[4] = Math.min(-Double.MIN_NORMAL, -Math.exp(Math.log(-trafoMatrix[4]) + factor * amount));
+
+        double prevTrafoX = trafoMatrix[0];
+        double prevTrafoY = trafoMatrix[4];
+        trafoMatrix[0] = Math.max(Double.MIN_NORMAL, trafoMatrix[0] * Math.pow(2, factor * amount));
+        trafoMatrix[4] = Math.min(-Double.MIN_NORMAL, trafoMatrix[4] * Math.pow(2, factor * amount));
+
+        if ((e.getModifiersEx() & InputEvent.SHIFT_DOWN_MASK) != 64) {
+            trafoMatrix[2] = (trafoMatrix[2] - e.getX()) * trafoMatrix[0] / prevTrafoX + e.getX();
+            trafoMatrix[5] = (trafoMatrix[5] - e.getY()) * trafoMatrix[4] / prevTrafoY + e.getY();
+        }
         repaint();
     }
 

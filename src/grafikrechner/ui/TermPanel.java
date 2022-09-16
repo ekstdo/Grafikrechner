@@ -9,7 +9,6 @@ import java.util.Arrays;
 
 public class TermPanel extends JPanel {
     int counter = 0;
-    ArrayList<TermRow> rows;
     TermPanel(MainWindow plotter){
         JButton addButton = new JButton("+");
 
@@ -29,5 +28,9 @@ public class TermPanel extends JPanel {
 
     public int getIndex(TermRow row){
         return Arrays.asList(getComponents()).indexOf(row) - 1;
+    }
+
+    public void markError(int index, int start, int len){
+        ((TermRow) getComponent(index + 1)).markError(start, len);
     }
 }
