@@ -22,6 +22,12 @@ a deliberate barrier, but if I had to do it again, I'd do it in Kotlin or Rust.
 
 - JRE
 
+### resources used:
+
+- [Blog post about contour plotting](https://www.mattkeeter.com/projects/contours/)
+- [Pratt Parsing](https://craftinginterpreters.com/) and [implementation](https://matklad.github.io/2020/04/13/simple-but-powerful-pratt-parsing.html)
+
 ### also checkout:
 
 - [other guy who did this](https://github.com/C-J-R/Grafikrechner)
+
