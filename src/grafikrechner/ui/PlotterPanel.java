@@ -51,8 +51,8 @@ public class PlotterPanel extends JPanel implements MouseMotionListener, MouseLi
         double[] bounds = getDomainBB(domain);
 
         double nearestPower = Math.pow(10, Math.floor(Math.log10(bounds[2] - bounds[0])  ));
-        double lowestRoundedOffsetX = ((int) (bounds[0] / nearestPower * 2)) * nearestPower / 2;
-        double lowestRoundedOffsetY = ((int) (bounds[1] / nearestPower * 2)) * nearestPower / 2;
+        double lowestRoundedOffsetX = (Math.floor(bounds[0] / nearestPower * 2)) * nearestPower / 2;
+        double lowestRoundedOffsetY = (Math.floor(bounds[1] / nearestPower * 2)) * nearestPower / 2;
 
         g.setColor(Color.black);
         drawLineTransformed(g, bounds[0], 0,bounds[2], 0);
@@ -113,12 +113,12 @@ public class PlotterPanel extends JPanel implements MouseMotionListener, MouseLi
                 Quadtree result = Quadtree.build(lsteps, bounds[0], bounds[1], bounds[2], bounds[3]);
 
 
-                long t1 = System.currentTimeMillis();
+                // long t1 = System.currentTimeMillis();
                 result = result.reduce(function.fun);
-                long t2 = System.currentTimeMillis();
+                // long t2 = System.currentTimeMillis();
                 result.draw(function.fun, this, g);
-                long t3 = System.currentTimeMillis();
-                System.out.println("calc time: " + (t2 - t1) + "  ms, draw time: " + (t3 - t2) + " ms");
+                // long t3 = System.currentTimeMillis();
+                // System.out.println("calc time: " + (t2 - t1) + "  ms, draw time: " + (t3 - t2) + " ms");
 
 
 
@@ -198,10 +198,16 @@ public class PlotterPanel extends JPanel implements MouseMotionListener, MouseLi
         trafoMatrix[0] = Math.max(Double.MIN_NORMAL, trafoMatrix[0] * Math.pow(2, factor * amount));
         trafoMatrix[4] = Math.min(-Double.MIN_NORMAL, trafoMatrix[4] * Math.pow(2, factor * amount));
 
+        if (trafoMatrix[0] > 1.0E13){
+            trafoMatrix[0] = prevTrafoX;
+            trafoMatrix[4] = prevTrafoY;
+            return;
+        }
         if ((e.getModifiersEx() & InputEvent.SHIFT_DOWN_MASK) != 64) {
             trafoMatrix[2] = (trafoMatrix[2] - e.getX()) * trafoMatrix[0] / prevTrafoX + e.getX();
             trafoMatrix[5] = (trafoMatrix[5] - e.getY()) * trafoMatrix[4] / prevTrafoY + e.getY();
         }
+
         repaint();
     }
 

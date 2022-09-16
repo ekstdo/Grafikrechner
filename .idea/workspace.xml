@@ -4,14 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="221c5bae-b2ae-492e-b0ae-ba6188b23da3" name="Changes" comment="Updated README.md links">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    <list default="true" id="221c5bae-b2ae-492e-b0ae-ba6188b23da3" name="Changes" comment="Corrected integer constant to double">
       <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/PlotterPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/PlotterPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Empty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Empty.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Full.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Full.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Leaf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Leaf.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Quadtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Quadtree.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Tree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -181,7 +175,21 @@
       <option name="project" value="LOCAL" />
       <updated>1663330730396</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Added Sampled Distance fields">
+      <created>1663334084570</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1663334084571</updated>
+    </task>
+    <task id="LOCAL-00014" summary="Corrected integer constant to double">
+      <created>1663334132467</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1663334132467</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -206,7 +214,9 @@
     <MESSAGE value="Quadtree implementation for implicit plotting" />
     <MESSAGE value="Updated README.md" />
     <MESSAGE value="Updated README.md links" />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated README.md links" />
+    <MESSAGE value="Added Sampled Distance fields" />
+    <MESSAGE value="Corrected integer constant to double" />
+    <option name="LAST_COMMIT_MESSAGE" value="Corrected integer constant to double" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
