@@ -206,8 +206,8 @@ public class PlotterPanel extends JPanel implements MouseMotionListener, MouseLi
     }
 
     public void initialCallback() {
-        trafoMatrix[2] = getWidth() / 2;
-        trafoMatrix[5] = getHeight() / 2;
+        trafoMatrix[2] = getWidth() / 2.0;
+        trafoMatrix[5] = getHeight() / 2.0;
     }
 }
 
