@@ -24,4 +24,4 @@ a deliberate barrier, but if I had to do it again, I'd do it in Kotlin or Rust.
 
 ### also checkout:
 
-- (other guy who did this)[https://github.com/C-J-R/Grafikrechner]
+- [other guy who did this](https://github.com/C-J-R/Grafikrechner)
