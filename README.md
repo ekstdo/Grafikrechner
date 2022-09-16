@@ -8,10 +8,15 @@ a deliberate barrier, but if I had to do it again, I'd do it in Kotlin or Rust.
 
 ### TODO
 
-- [ ] explicit Graphs
-- [ ] implicit Graphs
-  - [ ] quadtree
+- [X] explicit Graphs
+- [X] implicit Graphs
+  - [X] quadtree
   - [ ] partial derivatives
+- [ ] Functions
+  - [ ] trigonometry
+  - [ ] sum
+- [ ] Nice to haves
+  - [ ] root estimation 
 
 ### dependencies:
 
