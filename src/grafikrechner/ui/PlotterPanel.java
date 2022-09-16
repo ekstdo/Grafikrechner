@@ -1,6 +1,7 @@
 package grafikrechner.ui;
 
 import grafikrechner.parser.Term;
+import grafikrechner.ui.quadtree.Quadtree;
 import grafikrechner.util.PosParameters;
 
 import javax.swing.*;
@@ -24,9 +25,18 @@ public class PlotterPanel extends JPanel implements MouseMotionListener, MouseLi
         this.plotter = plotter;
     }
 
-    void drawLineTransformed(Graphics g, double x1, double y1, double x2, double y2){
+    public void drawLineTransformed(Graphics g, double x1, double y1, double x2, double y2){
         double[] transformed = PosParameters.transform(new double[]{x1, y1, x2, y2}, trafoMatrix);
         g.drawLine((int) transformed[0], (int) transformed[1], (int) transformed[2], (int) transformed[3]);
+    }
+
+    public void drawRectTransformed(Graphics g, double x1, double y1, double x2, double y2){
+        double[] transformed = PosParameters.transform(new double[]{x1, y1, x2, y2}, trafoMatrix);
+        double xmin = Math.min(transformed[0], transformed[2]);
+        double xmax = Math.max(transformed[0], transformed[2]);
+        double ymin = Math.min(transformed[1], transformed[3]);
+        double ymax = Math.max(transformed[1], transformed[3]);
+        g.fillRect((int) xmin, (int) ymin, (int) (xmax - xmin), (int) (ymax - ymin));
     }
 
     @Override
@@ -99,7 +109,17 @@ public class PlotterPanel extends JPanel implements MouseMotionListener, MouseLi
         double stepSize = (bounds[2] - bounds[0]) / steps;
         for (Term function : plotter.functions) {
             if (function == null) continue;
-            if (!function.is_implicit()){
+            if (function.is_implicit()) {
+                steps = Math.log(steps) / Math.log(2) - 3; // implicit takes lot longer to render, so we make it less exact and maybe interpolate along the way
+                Quadtree result = Quadtree.build(steps, bounds[0], bounds[1], bounds[2], bounds[3]);
+
+
+                result = result.reduce(function.fun);
+                result.draw(function.fun, this, g);
+
+
+
+            } else {
                 PosParameters input = new PosParameters(bounds[0] - 1,  0);
                 PosParameters previous = new PosParameters(input.x, function.fun.apply(input));
 

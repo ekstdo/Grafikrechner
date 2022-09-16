@@ -4,13 +4,15 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="221c5bae-b2ae-492e-b0ae-ba6188b23da3" name="Changes" comment="Connected Parser to Plotter">
+    <list default="true" id="221c5bae-b2ae-492e-b0ae-ba6188b23da3" name="Changes" comment="Display Grid">
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Empty.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Full.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Leaf.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Quadtree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Tree.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/grafikrechner/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Parser.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/MainWindow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/MainWindow.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/PlotterPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/PlotterPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/TermPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/TermPanel.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/TermRow.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/TermRow.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +147,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663276836548</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Display Grid">
+      <created>1663320106440</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1663320106440</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -166,7 +175,16 @@
     <MESSAGE value="Added Axis and started working on inputs" />
     <MESSAGE value="Added README.md" />
     <MESSAGE value="Connected Parser to Plotter" />
-    <option name="LAST_COMMIT_MESSAGE" value="Connected Parser to Plotter" />
+    <MESSAGE value="Display Grid" />
+    <option name="LAST_COMMIT_MESSAGE" value="Display Grid" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="Application">
+        <watch expression="ymax - ymin" language="JAVA" />
+        <watch expression="xmax - xmin" language="JAVA" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="XSLT-Support.FileAssociations.UIState">
     <expand />
