@@ -26,6 +26,7 @@ public abstract class Quadtree {
 
     public abstract boolean isFull();
     public abstract boolean isEmpty();
+    public abstract boolean isLeaf();
 
     public abstract void draw(FunctionalAST f, PlotterPanel plotterPanel, Graphics g);
 

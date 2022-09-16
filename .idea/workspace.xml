@@ -6,6 +6,12 @@
   <component name="ChangeListManager">
     <list default="true" id="221c5bae-b2ae-492e-b0ae-ba6188b23da3" name="Changes" comment="Updated README.md links">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/PlotterPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/PlotterPanel.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Empty.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Empty.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Full.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Full.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Leaf.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Leaf.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Quadtree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Quadtree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Tree.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/quadtree/Tree.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -168,7 +174,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663329887063</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Updated README.md links">
+      <created>1663330730396</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1663330730396</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">

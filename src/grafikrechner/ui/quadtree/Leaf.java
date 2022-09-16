@@ -14,6 +14,12 @@ public class Leaf extends Quadtree {
     public double xmax;
     public double ymax;
     int cachedSides;
+    public double cachedTLVal; // top left value
+    public double cachedTRVal;
+    public double cachedBRVal;
+    public double cachedBLVal;
+
+    public boolean cached = false;
 
     Leaf(double xmin, double ymin, double xmax, double ymax){
         this.xmin = xmin;
@@ -23,29 +29,33 @@ public class Leaf extends Quadtree {
         this.cachedSides = 0;
     }
 
+    public void cacheValues(FunctionalAST f){
+        if (cached) return;
+        PosParameters input = new PosParameters(xmin, ymin);
+        cachedTLVal = f.apply(input);
+        input.x = xmax;
+        cachedTRVal = f.apply(input);
+        input.y = ymax;
+        cachedBRVal = f.apply(input);
+        input.x = xmin;
+        cachedBLVal = f.apply(input);
+        cached = true;
+    }
     @Override
     public Quadtree reduce(FunctionalAST f) {
-        PosParameters input = new PosParameters(xmin, ymin);
-        double topLeft = f.apply(input);
-        input.x = xmax;
-        double topRight = f.apply(input);
-        input.y = ymax;
-        double bottomRight = f.apply(input);
-        input.x = xmin;
-        double bottomLeft = f.apply(input);
-
-        if (topLeft < 0 && topRight < 0 && bottomLeft < 0 && bottomRight < 0){
+        cacheValues(f);
+        if (cachedTLVal < 0 && cachedTRVal < 0 && cachedBLVal < 0 && cachedBRVal < 0){
             return new Empty();
         }
 
-        if (topLeft > 0 && topRight > 0 && bottomLeft > 0 && bottomRight > 0){
+        if (cachedTLVal > 0 && cachedTRVal > 0 && cachedBLVal > 0 && cachedBRVal > 0){
             return new Full();
         }
 
-        if (topLeft * topRight < 0) cachedSides |= 0b0001;
-        if (bottomRight * topRight < 0) cachedSides |= 0b0010;
-        if (bottomRight * bottomLeft < 0) cachedSides |= 0b0100;
-        if (topLeft * bottomLeft < 0) cachedSides |= 0b1000;
+        if (cachedTLVal * cachedTRVal < 0) cachedSides |= 0b0001;
+        if (cachedBRVal * cachedTRVal < 0) cachedSides |= 0b0010;
+        if (cachedBRVal * cachedBLVal < 0) cachedSides |= 0b0100;
+        if (cachedTLVal * cachedBLVal < 0) cachedSides |= 0b1000;
 
         return this;
     }
@@ -124,5 +134,10 @@ public class Leaf extends Quadtree {
         }
 
         return midPoint;
+    }
+
+    @Override
+    public boolean isLeaf() {
+        return true;
     }
 }

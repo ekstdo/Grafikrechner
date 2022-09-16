@@ -51,7 +51,6 @@ public class PlotterPanel extends JPanel implements MouseMotionListener, MouseLi
         double[] bounds = getDomainBB(domain);
 
         double nearestPower = Math.pow(10, Math.floor(Math.log10(bounds[2] - bounds[0])  ));
-        System.out.println(nearestPower);
         double lowestRoundedOffsetX = ((int) (bounds[0] / nearestPower * 2)) * nearestPower / 2;
         double lowestRoundedOffsetY = ((int) (bounds[1] / nearestPower * 2)) * nearestPower / 2;
 
@@ -110,12 +109,16 @@ public class PlotterPanel extends JPanel implements MouseMotionListener, MouseLi
         for (Term function : plotter.functions) {
             if (function == null) continue;
             if (function.is_implicit()) {
-                steps = Math.log(steps) / Math.log(2) - 3; // implicit takes lot longer to render, so we make it less exact and maybe interpolate along the way
-                Quadtree result = Quadtree.build(steps, bounds[0], bounds[1], bounds[2], bounds[3]);
+                double lsteps = Math.log(steps) / Math.log(2) - 3; // implicit takes lot longer to render, so we make it less exact and maybe interpolate along the way
+                Quadtree result = Quadtree.build(lsteps, bounds[0], bounds[1], bounds[2], bounds[3]);
 
 
+                long t1 = System.currentTimeMillis();
                 result = result.reduce(function.fun);
+                long t2 = System.currentTimeMillis();
                 result.draw(function.fun, this, g);
+                long t3 = System.currentTimeMillis();
+                System.out.println("calc time: " + (t2 - t1) + "  ms, draw time: " + (t3 - t2) + " ms");
 
 
 
@@ -205,7 +208,6 @@ public class PlotterPanel extends JPanel implements MouseMotionListener, MouseLi
     public void initialCallback() {
         trafoMatrix[2] = getWidth() / 2;
         trafoMatrix[5] = getHeight() / 2;
-        System.out.println(getWidth());
     }
 }
 

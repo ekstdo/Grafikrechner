@@ -32,4 +32,9 @@ public class Empty extends Quadtree {
     public List<Leaf> toList() {
         return new LinkedList<>();
     }
+
+    @Override
+    public boolean isLeaf() {
+        return false;
+    }
 }
