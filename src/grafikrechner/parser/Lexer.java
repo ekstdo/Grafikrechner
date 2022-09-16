@@ -85,6 +85,7 @@ public class Lexer implements Iterator<Token> {
         else if (next == ')') returning = makeToken(TokenType.PAREN_RIGHT);
         else if (next == '[') returning = makeToken(TokenType.BRACK_LEFT);
         else if (next == ']') returning = makeToken(TokenType.BRACK_RIGHT);
+        else if (next == ',') returning = makeToken(TokenType.COMMA);
         else if (Character.isAlphabetic(next)) {
             while (Character.isAlphabetic(next = getNext())){}
             save(next);

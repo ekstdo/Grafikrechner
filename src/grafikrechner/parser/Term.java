@@ -1,11 +1,6 @@
 package grafikrechner.parser;
 
 import grafikrechner.parser.ast.FunctionalAST;
-import grafikrechner.util.PosParameters;
-
-import java.awt.*;
-import java.util.function.BiFunction;
-import java.util.function.Function;
 
 public class Term {
     boolean implicit;
@@ -16,7 +11,7 @@ public class Term {
         this.fun = fun;
     }
 
-    public boolean is_implicit() {
+    public boolean isImplicit() {
         return implicit;
     }
 }

@@ -11,5 +11,6 @@ public enum TokenType {
     PI,
     E,
     NUMBER,
-    END
+    END,
+    COMMA
 }

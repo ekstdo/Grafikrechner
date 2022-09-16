@@ -108,7 +108,7 @@ public class PlotterPanel extends JPanel implements MouseMotionListener, MouseLi
         double stepSize = (bounds[2] - bounds[0]) / steps;
         for (Term function : plotter.functions) {
             if (function == null) continue;
-            if (function.is_implicit()) {
+            if (function.isImplicit()) {
                 double lsteps = Math.log(steps) / Math.log(2) - 3; // implicit takes lot longer to render, so we make it less exact and maybe interpolate along the way
                 Quadtree result = Quadtree.build(lsteps, bounds[0], bounds[1], bounds[2], bounds[3]);
 

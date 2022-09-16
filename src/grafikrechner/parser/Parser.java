@@ -8,6 +8,7 @@ import grafikrechner.util.PosParameters;
 
 import java.text.ParseException;
 import java.util.*;
+import java.util.function.Function;
 
 public class Parser {
     Lexer lex;
@@ -15,6 +16,9 @@ public class Parser {
     Map<String,
             ASTCombinator> binOp;
     Map<String, Pair<Integer, Integer>> binPrec;
+    Map<String, Function<ArrayList<FunctionalAST>, FunctionalAST>> functions;
+
+    Map<String, FunctionalAST> variables;
     Token save = null;
 
     public Parser(){
@@ -31,6 +35,13 @@ public class Parser {
         binOp.put("*", new FunctionalASTCombinator((x, y) -> x * y));
         binOp.put("/", new FunctionalASTCombinator((x, y) -> x / y));
         binOp.put("^", new FunctionalASTCombinator(Math::pow));
+
+        functions = new HashMap<>();
+        functions.put("sin", args -> (p -> Math.sin(args.get(0).apply(p))));
+        functions.put("cos", args -> (p -> Math.cos(args.get(0).apply(p))));
+        functions.put("tan", args -> (p -> Math.tan(args.get(0).apply(p))));
+
+        variables = new HashMap<>();
     }
 
     public static void main(String[] args) {
@@ -84,13 +95,43 @@ public class Parser {
             left = p -> p.x;
         } else if (nextToken.type == TokenType.Y) {
             left = p -> p.y;
+        } else if (nextToken.type == TokenType.R) {
+            left = p -> p.rCached;
+        } else if (nextToken.type == TokenType.PHI) {
+            left = p -> p.phiCached;
+        } else if (nextToken.type == TokenType.VARIABLE) {
+            String var = nextToken.inner;
+            Token mbyParen = getToken();
+            if (mbyParen.type == TokenType.PAREN_LEFT) {
+                ArrayList<FunctionalAST> args = new ArrayList<>();
+
+                mbyParen = getToken();
+                while (mbyParen.type != TokenType.PAREN_RIGHT){
+                    save = mbyParen;
+                    args.add(parseExpr(0));
+                    mbyParen = getToken();
+                }
+
+                Function<ArrayList<FunctionalAST>, FunctionalAST> function = functions.get(var);
+                if (function == null){
+                    throw new ParseException("unknown function", save.position);
+                }
+                left = function.apply(args);
+            } else {
+                save = mbyParen;
+                FunctionalAST ret = variables.get(var);
+                if (ret == null)
+                    throw new ParseException("unknown variable", save.position);
+                else
+                    left = ret;
+            }
         } else
             throw new ParseException("invalid begin", nextToken.position);
 
         while (true) {
             nextToken = getToken();
             save = nextToken;
-            if (nextToken.type == TokenType.BRACK_RIGHT || nextToken.type == TokenType.PAREN_RIGHT || nextToken.isEnd()){
+            if (nextToken.type == TokenType.COMMA || nextToken.type == TokenType.BRACK_RIGHT || nextToken.type == TokenType.PAREN_RIGHT || nextToken.isEnd()){
                 break;
             }
             if (nextToken.type != TokenType.OPERATOR) {

@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="221c5bae-b2ae-492e-b0ae-ba6188b23da3" name="Changes" comment="Corrected integer constant to double">
+    <list default="true" id="221c5bae-b2ae-492e-b0ae-ba6188b23da3" name="Changes" comment="Fixed Axes and set a minimum scale">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/parser/Lexer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Lexer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/parser/Parser.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Parser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/parser/Term.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/parser/Term.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/grafikrechner/parser/TokenType.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/parser/TokenType.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/grafikrechner/ui/PlotterPanel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/grafikrechner/ui/PlotterPanel.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -189,7 +194,14 @@
       <option name="project" value="LOCAL" />
       <updated>1663334132467</updated>
     </task>
-    <option name="localTasksCounter" value="15" />
+    <task id="LOCAL-00015" summary="Fixed Axes and set a minimum scale">
+      <created>1663334563121</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1663334563121</updated>
+    </task>
+    <option name="localTasksCounter" value="16" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -216,7 +228,8 @@
     <MESSAGE value="Updated README.md links" />
     <MESSAGE value="Added Sampled Distance fields" />
     <MESSAGE value="Corrected integer constant to double" />
-    <option name="LAST_COMMIT_MESSAGE" value="Corrected integer constant to double" />
+    <MESSAGE value="Fixed Axes and set a minimum scale" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed Axes and set a minimum scale" />
   </component>
   <component name="XDebuggerManager">
     <watches-manager>
